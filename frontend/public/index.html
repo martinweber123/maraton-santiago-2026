@@ -240,15 +240,17 @@ body{display:flex;flex-direction:column}
     </div>
   </div>
 
-  <!-- FUERZA -->
+<!-- FUERZA -->
   <div class="panel" id="panel-strength">
     <div class="section-label">Ejercicios</div>
     <div class="exercise-grid" id="exercise-grid"></div>
+    <button class="btn-log" style="margin-top:8px" onclick="sendStrengthToCoach()">💪 Analizar progreso con coach</button>
   </div>
 
-  <!-- GARMIN -->
+
+<!-- GARMIN -->
   <div class="panel" id="panel-metrics">
-    <div class="section-label">Datos Garmin — ingresa tras cada entrenamiento</div>
+    <div class="section-label">Recuperación — datos de hoy</div>
     <div class="metrics-grid">
       <div class="metric-card">
         <div class="metric-icon">💓</div>
@@ -271,23 +273,102 @@ body{display:flex;flex-direction:column}
         <input class="metric-input" type="number" step="0.1" placeholder="hrs" oninput="saveMetric('sleep',this.value)" id="inp-sleep">
       </div>
     </div>
-    <div class="section-label" style="margin-top:20px">Último entrenamiento</div>
-    <div class="card">
-      <div class="metrics-grid">
+
+    <div class="section-label" style="margin-top:16px">Último entrenamiento — carrera</div>
+    <div class="card" style="padding:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div>
-          <div class="metric-lbl">Tiempo Zona 2 (min)</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z2time',this.value)" id="inp-z2">
-          <div class="metric-lbl" style="margin-top:8px">FC Promedio (bpm)</div>
-          <input class="metric-input" type="number" placeholder="bpm" oninput="saveMetric('avghr',this.value)" id="inp-hr">
+          <div class="metric-lbl">Distancia (km)</div>
+          <input class="metric-input" type="number" step="0.1" placeholder="ej: 13.3" oninput="saveMetric('dist',this.value)" id="inp-dist">
         </div>
         <div>
-          <div class="metric-lbl">Distancia real (km)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="km" oninput="saveMetric('dist',this.value)" id="inp-dist">
-          <div class="metric-lbl" style="margin-top:8px">Ritmo promedio</div>
-          <input class="metric-input" type="text" placeholder="mm:ss" oninput="saveMetric('pace',this.value)" id="inp-pace">
+          <div class="metric-lbl">Ritmo medio (mm:ss)</div>
+          <input class="metric-input" type="text" placeholder="ej: 7:04" oninput="saveMetric('pace',this.value)" id="inp-pace">
+        </div>
+        <div>
+          <div class="metric-lbl">FC media (ppm)</div>
+          <input class="metric-input" type="number" placeholder="ej: 173" oninput="saveMetric('avghr',this.value)" id="inp-hr">
+        </div>
+        <div>
+          <div class="metric-lbl">FC máxima (ppm)</div>
+          <input class="metric-input" type="number" placeholder="ej: 200" oninput="saveMetric('maxhr',this.value)" id="inp-maxhr">
+        </div>
+        <div>
+          <div class="metric-lbl">Cadencia media (spm)</div>
+          <input class="metric-input" type="number" placeholder="ej: 161" oninput="saveMetric('cadence',this.value)" id="inp-cadence">
+        </div>
+        <div>
+          <div class="metric-lbl">Potencia media (W)</div>
+          <input class="metric-input" type="number" placeholder="ej: 286" oninput="saveMetric('power',this.value)" id="inp-power">
+        </div>
+        <div>
+          <div class="metric-lbl">Oscilación vertical (cm)</div>
+          <input class="metric-input" type="number" step="0.1" placeholder="ej: 8.1" oninput="saveMetric('vo',this.value)" id="inp-vo">
+        </div>
+        <div>
+          <div class="metric-lbl">Ratio vertical (%)</div>
+          <input class="metric-input" type="number" step="0.1" placeholder="ej: 9.3" oninput="saveMetric('vr',this.value)" id="inp-vr">
+        </div>
+        <div>
+          <div class="metric-lbl">Stamina final (%)</div>
+          <input class="metric-input" type="number" placeholder="ej: 4" oninput="saveMetric('stamina',this.value)" id="inp-stamina">
+        </div>
+        <div>
+          <div class="metric-lbl">Cond. rendimiento</div>
+          <input class="metric-input" type="number" placeholder="ej: +5" oninput="saveMetric('perfcond',this.value)" id="inp-perfcond">
         </div>
       </div>
     </div>
+
+    <div class="section-label" style="margin-top:4px">Training Effect</div>
+    <div class="card" style="padding:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div>
+          <div class="metric-lbl">Aeróbico (1-5)</div>
+          <input class="metric-input" type="number" step="0.1" placeholder="ej: 5.0" oninput="saveMetric('te_aer',this.value)" id="inp-te-aer">
+        </div>
+        <div>
+          <div class="metric-lbl">Anaeróbico (1-5)</div>
+          <input class="metric-input" type="number" step="0.1" placeholder="ej: 3.1" oninput="saveMetric('te_ana',this.value)" id="inp-te-ana">
+        </div>
+        <div>
+          <div class="metric-lbl">Carga ejercicio</div>
+          <input class="metric-input" type="number" placeholder="ej: 339" oninput="saveMetric('load',this.value)" id="inp-load">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:4px">Tiempo en zonas de FC (min)</div>
+    <div class="card" style="padding:14px">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--text2);margin-bottom:4px">Z1</div>
+          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">100-118</div>
+          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z1',this.value)" id="inp-z1" style="font-size:13px;padding:6px">
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--green);margin-bottom:4px">Z2</div>
+          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">119-138</div>
+          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z2time',this.value)" id="inp-z2" style="font-size:13px;padding:6px">
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--yellow);margin-bottom:4px">Z3</div>
+          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">139-158</div>
+          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z3',this.value)" id="inp-z3" style="font-size:13px;padding:6px">
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--orange);margin-bottom:4px">Z4</div>
+          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">159-178</div>
+          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z4',this.value)" id="inp-z4" style="font-size:13px;padding:6px">
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--red);margin-bottom:4px">Z5</div>
+          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">>178</div>
+          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z5',this.value)" id="inp-z5" style="font-size:13px;padding:6px">
+        </div>
+      </div>
+    </div>
+
     <button class="btn-log" style="margin-top:8px" onclick="sendGarminToCoach()">📊 Enviar datos al coach</button>
   </div>
 </div>
@@ -614,7 +695,14 @@ async function loadPRs(){
 }
 
 function renderMetricInputs(){
-  const map={hrv:'hrv',bb:'bb',vo2:'vo2',sleep:'sleep',z2time:'z2',avghr:'hr',dist:'dist',pace:'pace'};
+  const map={
+    hrv:'hrv',bb:'bb',vo2:'vo2',sleep:'sleep',
+    dist:'dist',pace:'pace',avghr:'hr',maxhr:'maxhr',
+    cadence:'cadence',power:'power',vo:'vo',vr:'vr',
+    stamina:'stamina',perfcond:'perfcond',
+    te_aer:'te-aer',te_ana:'te-ana',load:'load',
+    z1:'z1',z2time:'z2',z3:'z3',z4:'z4',z5:'z5'
+  };
   Object.entries(map).forEach(([k,id])=>{
     const inp=document.getElementById(`inp-${id}`);
     if(inp&&state.metrics[k])inp.value=state.metrics[k];
@@ -754,12 +842,63 @@ function quickMsg(text){
 
 function sendGarminToCoach(){
   const m=state.metrics;
-  const msg=`Datos Garmin de hoy:\n- HRV: ${m.hrv||'N/A'} ms\n- Body Battery: ${m.bb||'N/A'}/100\n- VO2max: ${m.vo2||'N/A'} ml/kg/min\n- Sueño: ${m.sleep||'N/A'} hrs\n- Tiempo zona 2: ${m.z2time||'N/A'} min\n- FC promedio: ${m.avghr||'N/A'} bpm\n- Distancia real: ${m.dist||'N/A'} km\n- Ritmo: ${m.pace||'N/A'} min/km\n\n¿Cómo interpretas estos datos y qué recomiendas para el siguiente entrenamiento?`;
+  const msg=`Datos Garmin Forerunner 955 — post entrenamiento:
+
+RECUPERACIÓN:
+- HRV: ${m.hrv||'N/A'} ms
+- Body Battery: ${m.bb||'N/A'}/100
+- VO2max: ${m.vo2||'N/A'} ml/kg/min
+- Sueño: ${m.sleep||'N/A'} hrs
+
+CARRERA:
+- Distancia: ${m.dist||'N/A'} km · Ritmo: ${m.pace||'N/A'} min/km
+- FC media: ${m.avghr||'N/A'} ppm · FC máx: ${m.maxhr||'N/A'} ppm
+- Cadencia: ${m.cadence||'N/A'} spm · Potencia: ${m.power||'N/A'} W
+- Oscilación vertical: ${m.vo||'N/A'} cm · Ratio vertical: ${m.vr||'N/A'}%
+- Stamina final: ${m.stamina||'N/A'}% · Condición rendimiento: ${m.perfcond||'N/A'}
+
+TRAINING EFFECT:
+- Aeróbico: ${m.te_aer||'N/A'}/5 · Anaeróbico: ${m.te_ana||'N/A'}/5
+- Carga de ejercicio: ${m.load||'N/A'}
+
+ZONAS FC (min):
+- Z1: ${m.z1||'0'} · Z2: ${m.z2time||'0'} · Z3: ${m.z3||'0'} · Z4: ${m.z4||'0'} · Z5: ${m.z5||'0'}
+
+Analiza estos datos en el contexto de mi plan de maratón (semana actual y entrenamiento de hoy). ¿Cómo me recuperé? ¿Debo ajustar algo para el próximo entrenamiento?`;
   document.getElementById('chat-input').value=msg;
   sendChat();
   showTab('chat',document.querySelectorAll('.tab-btn')[2]);
 }
-
+async function sendStrengthToCoach(){
+  try{
+    const r=await fetch('/api/strength/history');
+    const data=await r.json();
+    if(!data.length){
+      addMsgDOM('ai','Aún no tienes registros de fuerza. ¡Empieza a registrar tus series!');
+      showTab('chat',document.querySelectorAll('.tab-btn')[2]);
+      return;
+    }
+    const prs={};
+    const recent={};
+    data.forEach(l=>{
+      if(!prs[l.exercise]||l.weight>prs[l.exercise])prs[l.exercise]=l.weight;
+      if(!recent[l.exercise])recent[l.exercise]=l;
+    });
+    const exNames={bulgaras:'Búlgaras',rdl:'RDL',hipthrust:'Hip Thrust',pantorrillas:'Pantorrillas',plancha:'Plancha',chinups:'Chin-ups',filas:'Filas',lunge:'Zancadas'};
+    const{week}=getCurrentWeekDay();
+    const lines=Object.entries(prs).map(([ex,w])=>{
+      const r=recent[ex];
+      return`- ${exNames[ex]||ex}: PR ${w>0?w+'kg':'peso corporal'} · Último: ${r.sets}x${r.reps} (${r.date})`;
+    }).join('\n');
+    const msg=`Resumen de fuerza — Semana ${week} del plan:\n${lines}\n\n¿Estoy progresando bien en fuerza para esta etapa del plan de maratón? ¿Debo subir pesos, mantener o reducir dada la carga de running actual?`;
+    document.getElementById('chat-input').value=msg;
+    sendChat();
+    showTab('chat',document.querySelectorAll('.tab-btn')[2]);
+  }catch(e){
+    addMsgDOM('ai','⚠️ Error al cargar historial de fuerza.');
+    showTab('chat',document.querySelectorAll('.tab-btn')[2]);
+  }
+}
 function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px'}
 function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
