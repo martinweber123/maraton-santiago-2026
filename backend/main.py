@@ -10,7 +10,7 @@ from datetime import date, datetime
 app = FastAPI()
 client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
-DB_PATH = os.environ.get("DB_PATH", "/tmp/maraton.db")
+DB_PATH = os.environ.get("DB_PATH", "/data/maraton.db")
 Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
 
 BASE_DIR = Path(__file__).parent.parent
