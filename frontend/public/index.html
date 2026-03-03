@@ -522,10 +522,16 @@ function getCurrentWeekDay(){
 
 // LOAD/SAVE
 async function loadState(){
+// Cargar backup local primero
+  const lc=localStorage.getItem('maraton_completed');
+  if(lc)state.completed=JSON.parse(lc);
+  // Luego sincronizar con backend (tiene prioridad)
   try{
     const r=await fetch('/api/workout/all');
     const data=await r.json();
     for(const[id,v]of Object.entries(data))if(v.completed)state.completed[id]=true;
+    // Actualizar localStorage con datos del backend
+    localStorage.setItem('maraton_completed',JSON.stringify(state.completed));
   }catch(e){}
   const m=localStorage.getItem('maraton_metrics');
   if(m)state.metrics=JSON.parse(m);
@@ -550,6 +556,8 @@ async function loadState(){
 
 async function saveWorkout(id,week,dayIdx,completed){
   state.completed[id]=completed;
+  // Guardar en localStorage como backup
+  localStorage.setItem('maraton_completed',JSON.stringify(state.completed));
   try{
     await fetch('/api/workout/update',{
       method:'POST',headers:{'Content-Type':'application/json'},
