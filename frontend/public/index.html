@@ -315,7 +315,7 @@ body{display:flex;flex-direction:column}
         </div>
         <div>
           <div class="metric-lbl">Cond. rendimiento</div>
-          <input class="metric-input" type="number" placeholder="ej: +5" oninput="saveMetric('perfcond',this.value)" id="inp-perfcond">
+          <input class="metric-input" type="number" placeholder="ej: -2 o +5" min="-10" max="10" oninput="saveMetric('perfcond',this.value)" id="inp-perfcond">
         </div>
       </div>
     </div>
@@ -369,7 +369,10 @@ body{display:flex;flex-direction:column}
       </div>
     </div>
 
-    <button class="btn-log" style="margin-top:8px" onclick="sendGarminToCoach()">📊 Enviar datos al coach</button>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+  <button class="btn-log" style="background:var(--card);border:1px solid var(--border);color:var(--text2)" onclick="clearWorkoutMetrics()">🗑 Limpiar entrenamiento</button>
+  <button class="btn-log" onclick="sendGarminToCoach()">📊 Enviar al coach</button>
+</div>
   </div>
 </div>
 
@@ -898,6 +901,17 @@ async function sendStrengthToCoach(){
     addMsgDOM('ai','⚠️ Error al cargar historial de fuerza.');
     showTab('chat',document.querySelectorAll('.tab-btn')[2]);
   }
+}
+function clearWorkoutMetrics(){
+  const workoutKeys=['dist','pace','avghr','maxhr','cadence','power','vo','vr','stamina','perfcond','te_aer','te_ana','load','z1','z2time','z3','z4','z5'];
+  workoutKeys.forEach(k=>delete state.metrics[k]);
+  localStorage.setItem('maraton_metrics',JSON.stringify(state.metrics));
+  renderMetricInputs();
+  // Limpiar visualmente los inputs
+  ['dist','pace','hr','maxhr','cadence','power','vo','vr','stamina','perfcond','te-aer','te-ana','load','z1','z2','z3','z4','z5'].forEach(id=>{
+    const el=document.getElementById('inp-'+id);
+    if(el)el.value='';
+  });
 }
 function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px'}
 function openModal(id){document.getElementById(id).classList.add('open')}
