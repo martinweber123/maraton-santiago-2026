@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0a0a0f">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>Maratón Santiago 2026</title>
+<title>Medio Maratón Santiago 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -62,8 +62,6 @@ body{display:flex;flex-direction:column}
 .btn-complete{width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;margin-top:14px;transition:all .2s}
 .btn-complete.pending{background:var(--accent);color:white}
 .btn-complete.done{background:rgba(34,197,94,0.15);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
-
-/* PROGRESS RING - fixed */
 .progress-ring-container{display:flex;justify-content:center;align-items:center;margin:8px 0 16px}
 .ring-wrap{position:relative;width:120px;height:120px}
 .ring-wrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg)}
@@ -72,7 +70,6 @@ body{display:flex;flex-direction:column}
 .ring-pct-lbl{font-size:10px;color:var(--text2);font-family:'Space Grotesk',sans-serif}
 .ring-track{fill:none;stroke:var(--bg3);stroke-width:8}
 .ring-fill{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
-
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .week-day{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;color:var(--text2);background:var(--card);border:1px solid var(--border);cursor:pointer;transition:all .15s}
 .week-day .day-name{font-size:8px;font-weight:600;letter-spacing:.5px;margin-bottom:2px}
@@ -97,8 +94,6 @@ body{display:flex;flex-direction:column}
 .workout-name{font-size:14px;font-weight:500}
 .workout-detail{font-size:12px;color:var(--text2);margin-top:2px}
 .workout-check{font-size:16px}
-
-/* CHAT */
 .chat-container{display:flex;flex-direction:column;height:calc(100vh - 200px)}
 .chat-messages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
 .msg{display:flex;gap:10px;margin-bottom:14px}
@@ -122,8 +117,6 @@ body{display:flex;flex-direction:column}
 .quick-btns::-webkit-scrollbar{display:none}
 .qbtn{white-space:nowrap;padding:6px 12px;border-radius:16px;font-size:12px;font-family:inherit;font-weight:500;background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .15s}
 .qbtn:active{background:var(--accent);color:white;border-color:var(--accent)}
-
-/* STRENGTH */
 .exercise-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .exercise-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .15s}
 .exercise-card:active{background:var(--card2)}
@@ -131,8 +124,6 @@ body{display:flex;flex-direction:column}
 .ex-name{font-size:13px;font-weight:600;margin-bottom:3px}
 .ex-detail{font-size:11px;color:var(--text2)}
 .ex-pr{font-size:11px;color:var(--accent2);margin-top:4px;font-weight:600}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:200;display:none;align-items:flex-end}
 .modal-overlay.open{display:flex}
 .modal{background:var(--bg2);width:100%;border-radius:24px 24px 0 0;max-height:88vh;overflow-y:auto;padding:0 0 calc(24px + var(--safe-bot));animation:slideUp .3s ease}
@@ -154,8 +145,6 @@ body{display:flex;flex-direction:column}
 .hist-left{font-size:13px}
 .hist-date{font-size:11px;color:var(--text2);margin-top:1px}
 .hist-weight{font-size:16px;font-weight:700;color:var(--accent2)}
-
-/* GARMIN */
 .metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .metric-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
 .metric-icon{font-size:24px;margin-bottom:6px}
@@ -172,7 +161,7 @@ body{display:flex;flex-direction:column}
 <div class="status-bar"></div>
 <div class="header">
   <div class="header-top">
-    <div class="header-title">Maratón <span>Santiago</span></div>
+    <div class="header-title">Medio <span>Santiago</span></div>
     <div class="countdown-pill">⏱ <strong id="days-left">--</strong> días</div>
   </div>
 </div>
@@ -191,10 +180,8 @@ body{display:flex;flex-direction:column}
       </div>
       <button class="btn-complete pending" id="btn-complete" onclick="toggleTodayComplete()">✓ Marcar como completado</button>
     </div>
-
     <div class="section-label">Esta semana</div>
     <div class="card card-sm"><div class="week-grid" id="week-grid"></div></div>
-
     <div class="section-label">Progreso general</div>
     <div class="card">
       <div class="progress-ring-container">
@@ -227,7 +214,7 @@ body{display:flex;flex-direction:column}
       <button class="qbtn" onclick="quickMsg('Explícame zona 2 según Attia')">Zona 2</button>
       <button class="qbtn" onclick="quickMsg('¿Cómo mejorar mi VO2max?')">VO2max</button>
       <button class="qbtn" onclick="quickMsg('Quiero cambiar las búlgaras por otro ejercicio')">Cambiar ejercicio</button>
-      <button class="qbtn" onclick="quickMsg('¿Cómo hidratarme el día del maratón?')">Hidratación</button>
+      <button class="qbtn" onclick="quickMsg('¿Cómo hidratarme el día del medio maratón?')">Hidratación</button>
     </div>
     <div class="chat-container">
       <div class="chat-messages" id="chat-messages"></div>
@@ -240,15 +227,14 @@ body{display:flex;flex-direction:column}
     </div>
   </div>
 
-<!-- FUERZA -->
+  <!-- FUERZA -->
   <div class="panel" id="panel-strength">
     <div class="section-label">Ejercicios</div>
     <div class="exercise-grid" id="exercise-grid"></div>
     <button class="btn-log" style="margin-top:8px" onclick="sendStrengthToCoach()">💪 Analizar progreso con coach</button>
   </div>
 
-
-<!-- GARMIN -->
+  <!-- GARMIN -->
   <div class="panel" id="panel-metrics">
     <div class="section-label">Recuperación — datos de hoy</div>
     <div class="metrics-grid">
@@ -273,106 +259,43 @@ body{display:flex;flex-direction:column}
         <input class="metric-input" type="number" step="0.1" placeholder="hrs" oninput="saveMetric('sleep',this.value)" id="inp-sleep">
       </div>
     </div>
-
     <div class="section-label" style="margin-top:16px">Último entrenamiento — carrera</div>
     <div class="card" style="padding:14px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <div>
-          <div class="metric-lbl">Distancia (km)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="ej: 13.3" oninput="saveMetric('dist',this.value)" id="inp-dist">
-        </div>
-        <div>
-          <div class="metric-lbl">Ritmo medio (mm:ss)</div>
-          <input class="metric-input" type="text" placeholder="ej: 7:04" oninput="saveMetric('pace',this.value)" id="inp-pace">
-        </div>
-        <div>
-          <div class="metric-lbl">FC media (ppm)</div>
-          <input class="metric-input" type="number" placeholder="ej: 173" oninput="saveMetric('avghr',this.value)" id="inp-hr">
-        </div>
-        <div>
-          <div class="metric-lbl">FC máxima (ppm)</div>
-          <input class="metric-input" type="number" placeholder="ej: 200" oninput="saveMetric('maxhr',this.value)" id="inp-maxhr">
-        </div>
-        <div>
-          <div class="metric-lbl">Cadencia media (spm)</div>
-          <input class="metric-input" type="number" placeholder="ej: 161" oninput="saveMetric('cadence',this.value)" id="inp-cadence">
-        </div>
-        <div>
-          <div class="metric-lbl">Potencia media (W)</div>
-          <input class="metric-input" type="number" placeholder="ej: 286" oninput="saveMetric('power',this.value)" id="inp-power">
-        </div>
-        <div>
-          <div class="metric-lbl">Oscilación vertical (cm)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="ej: 8.1" oninput="saveMetric('vo',this.value)" id="inp-vo">
-        </div>
-        <div>
-          <div class="metric-lbl">Ratio vertical (%)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="ej: 9.3" oninput="saveMetric('vr',this.value)" id="inp-vr">
-        </div>
-        <div>
-          <div class="metric-lbl">Stamina final (%)</div>
-          <input class="metric-input" type="number" placeholder="ej: 4" oninput="saveMetric('stamina',this.value)" id="inp-stamina">
-        </div>
-        <div>
-          <div class="metric-lbl">Cond. rendimiento</div>
-          <input class="metric-input" type="number" placeholder="ej: -2 o +5" min="-10" max="10" oninput="saveMetric('perfcond',this.value)" id="inp-perfcond">
-        </div>
+        <div><div class="metric-lbl">Distancia (km)</div><input class="metric-input" type="number" step="0.1" placeholder="ej: 10" oninput="saveMetric('dist',this.value)" id="inp-dist"></div>
+        <div><div class="metric-lbl">Ritmo medio (mm:ss)</div><input class="metric-input" type="text" placeholder="ej: 6:20" oninput="saveMetric('pace',this.value)" id="inp-pace"></div>
+        <div><div class="metric-lbl">FC media (ppm)</div><input class="metric-input" type="number" placeholder="ej: 150" oninput="saveMetric('avghr',this.value)" id="inp-hr"></div>
+        <div><div class="metric-lbl">FC máxima (ppm)</div><input class="metric-input" type="number" placeholder="ej: 175" oninput="saveMetric('maxhr',this.value)" id="inp-maxhr"></div>
+        <div><div class="metric-lbl">Cadencia media (spm)</div><input class="metric-input" type="number" placeholder="ej: 165" oninput="saveMetric('cadence',this.value)" id="inp-cadence"></div>
+        <div><div class="metric-lbl">Potencia media (W)</div><input class="metric-input" type="number" placeholder="ej: 260" oninput="saveMetric('power',this.value)" id="inp-power"></div>
+        <div><div class="metric-lbl">Oscilación vertical (cm)</div><input class="metric-input" type="number" step="0.1" placeholder="ej: 8.1" oninput="saveMetric('vo',this.value)" id="inp-vo"></div>
+        <div><div class="metric-lbl">Ratio vertical (%)</div><input class="metric-input" type="number" step="0.1" placeholder="ej: 9.3" oninput="saveMetric('vr',this.value)" id="inp-vr"></div>
+        <div><div class="metric-lbl">Stamina final (%)</div><input class="metric-input" type="number" placeholder="ej: 20" oninput="saveMetric('stamina',this.value)" id="inp-stamina"></div>
+        <div><div class="metric-lbl">Cond. rendimiento</div><input class="metric-input" type="number" placeholder="ej: -2 o +5" min="-10" max="10" oninput="saveMetric('perfcond',this.value)" id="inp-perfcond"></div>
       </div>
     </div>
-
     <div class="section-label" style="margin-top:4px">Training Effect</div>
     <div class="card" style="padding:14px">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div>
-          <div class="metric-lbl">Aeróbico (1-5)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="ej: 5.0" oninput="saveMetric('te_aer',this.value)" id="inp-te-aer">
-        </div>
-        <div>
-          <div class="metric-lbl">Anaeróbico (1-5)</div>
-          <input class="metric-input" type="number" step="0.1" placeholder="ej: 3.1" oninput="saveMetric('te_ana',this.value)" id="inp-te-ana">
-        </div>
-        <div>
-          <div class="metric-lbl">Carga ejercicio</div>
-          <input class="metric-input" type="number" placeholder="ej: 339" oninput="saveMetric('load',this.value)" id="inp-load">
-        </div>
+        <div><div class="metric-lbl">Aeróbico (1-5)</div><input class="metric-input" type="number" step="0.1" placeholder="ej: 3.5" oninput="saveMetric('te_aer',this.value)" id="inp-te-aer"></div>
+        <div><div class="metric-lbl">Anaeróbico (1-5)</div><input class="metric-input" type="number" step="0.1" placeholder="ej: 1.5" oninput="saveMetric('te_ana',this.value)" id="inp-te-ana"></div>
+        <div><div class="metric-lbl">Carga ejercicio</div><input class="metric-input" type="number" placeholder="ej: 180" oninput="saveMetric('load',this.value)" id="inp-load"></div>
       </div>
     </div>
-
     <div class="section-label" style="margin-top:4px">Tiempo en zonas de FC (min)</div>
     <div class="card" style="padding:14px">
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px">
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--text2);margin-bottom:4px">Z1</div>
-          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">100-118</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z1',this.value)" id="inp-z1" style="font-size:13px;padding:6px">
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--green);margin-bottom:4px">Z2</div>
-          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">119-138</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z2time',this.value)" id="inp-z2" style="font-size:13px;padding:6px">
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--yellow);margin-bottom:4px">Z3</div>
-          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">139-158</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z3',this.value)" id="inp-z3" style="font-size:13px;padding:6px">
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--orange);margin-bottom:4px">Z4</div>
-          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">159-178</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z4',this.value)" id="inp-z4" style="font-size:13px;padding:6px">
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--red);margin-bottom:4px">Z5</div>
-          <div style="font-size:9px;color:#9090b0;margin-bottom:4px">>178</div>
-          <input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z5',this.value)" id="inp-z5" style="font-size:13px;padding:6px">
-        </div>
+        <div style="text-align:center"><div style="font-size:10px;color:var(--text2);margin-bottom:4px">Z1</div><div style="font-size:9px;color:#9090b0;margin-bottom:4px">100-118</div><input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z1',this.value)" id="inp-z1" style="font-size:13px;padding:6px"></div>
+        <div style="text-align:center"><div style="font-size:10px;color:var(--green);margin-bottom:4px">Z2</div><div style="font-size:9px;color:#9090b0;margin-bottom:4px">119-138</div><input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z2time',this.value)" id="inp-z2" style="font-size:13px;padding:6px"></div>
+        <div style="text-align:center"><div style="font-size:10px;color:var(--yellow);margin-bottom:4px">Z3</div><div style="font-size:9px;color:#9090b0;margin-bottom:4px">139-158</div><input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z3',this.value)" id="inp-z3" style="font-size:13px;padding:6px"></div>
+        <div style="text-align:center"><div style="font-size:10px;color:var(--orange);margin-bottom:4px">Z4</div><div style="font-size:9px;color:#9090b0;margin-bottom:4px">159-178</div><input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z4',this.value)" id="inp-z4" style="font-size:13px;padding:6px"></div>
+        <div style="text-align:center"><div style="font-size:10px;color:var(--red);margin-bottom:4px">Z5</div><div style="font-size:9px;color:#9090b0;margin-bottom:4px">>178</div><input class="metric-input" type="number" placeholder="min" oninput="saveMetric('z5',this.value)" id="inp-z5" style="font-size:13px;padding:6px"></div>
       </div>
     </div>
-
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-  <button class="btn-log" style="background:var(--card);border:1px solid var(--border);color:var(--text2)" onclick="clearWorkoutMetrics()">🗑 Limpiar entrenamiento</button>
-  <button class="btn-log" onclick="sendGarminToCoach()">📊 Enviar al coach</button>
-</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <button class="btn-log" style="background:var(--card);border:1px solid var(--border);color:var(--text2)" onclick="clearWorkoutMetrics()">🗑 Limpiar entrenamiento</button>
+      <button class="btn-log" onclick="sendGarminToCoach()">📊 Enviar al coach</button>
+    </div>
   </div>
 </div>
 
@@ -422,78 +345,92 @@ body{display:flex;flex-direction:column}
 </div>
 
 <script>
+// ============================================================
+// PLAN AJUSTADO PARA MEDIO MARATÓN — Meta: Sub 2:15 (6:24/km)
+// Semanas 1-2: completadas (Base Aeróbica)
+// Semana 3: ajustada desde Jue (día 4) en adelante
+// Semanas 4-8: diseñadas para 21k
+// ============================================================
 const PLAN=[
-  {week:1,phase:"Base Aeróbica I",km:"35-40",days:[
-    {day:"Lun",name:"Carrera Z2 + Activación",type:"z2",dist:8,time:55,zone:"Z2",desc:"8km a ritmo conversacional (FC 125-145bpm). Activa caderas 10min antes."},
+  // SEMANA 1 — Base Aeróbica I (ya completada)
+  {week:1,phase:"Base Aeróbica I",km:"25-30",days:[
+    {day:"Lun",name:"Carrera Z2 + Activación",type:"z2",dist:7,time:47,zone:"Z2",desc:"7km a ritmo conversacional (FC 125-145bpm). Activa caderas 10min antes."},
     {day:"Mar",name:"Fuerza Tren Inferior",type:"strength",dist:0,time:60,zone:"--",desc:"Sentadillas búlgaras 4x8, Peso muerto rumano 3x10, Hip thrust 3x12, Pantorrillas 3x15."},
     {day:"Mié",name:"Descanso activo / Movilidad",type:"rest",dist:0,time:30,zone:"--",desc:"Stretching 20min + foam roller. Sin cardio intenso."},
-    {day:"Jue",name:"Carrera Z2 moderada",type:"z2",dist:10,time:68,zone:"Z2",desc:"10km zona 2. Mantén FC <145. Hidratación cada 20min."},
+    {day:"Jue",name:"Carrera Z2 moderada",type:"z2",dist:8,time:54,zone:"Z2",desc:"8km zona 2. Mantén FC <145. Hidratación cada 20min."},
     {day:"Vie",name:"Fuerza Core + Upper",type:"strength",dist:0,time:50,zone:"--",desc:"Plancha 4x45s, Bird-dog 3x10, Chin-ups 3x6, Filas 3x10, Press hombro 3x10."},
-    {day:"Sáb",name:"Long run inaugural",type:"long",dist:16,time:105,zone:"Z2-Z3",desc:"16km a ritmo cómodo. Los últimos 3km a ritmo maratón (6:00/km)."},
+    {day:"Sáb",name:"Long run inaugural",type:"long",dist:12,time:80,zone:"Z2-Z3",desc:"12km a ritmo cómodo. Los últimos 2km a ritmo objetivo (6:15/km)."},
     {day:"Dom",name:"Recuperación",type:"rest",dist:0,time:0,zone:"--",desc:"Descanso total. Come bien, duerme."}
   ]},
-  {week:2,phase:"Base Aeróbica II",km:"40-45",days:[
-    {day:"Lun",name:"Carrera Z2 + Strides",type:"z2",dist:9,time:62,zone:"Z2",desc:"8km Z2 + 4x100m strides al final."},
+  // SEMANA 2 — Base Aeróbica II (ya completada)
+  {week:2,phase:"Base Aeróbica II",km:"28-33",days:[
+    {day:"Lun",name:"Carrera Z2 + Strides",type:"z2",dist:7,time:50,zone:"Z2",desc:"6km Z2 + 4x100m strides al final."},
     {day:"Mar",name:"Fuerza Tren Inferior",type:"strength",dist:0,time:60,zone:"--",desc:"Búlgaras 4x10, RDL 3x10, Hip thrust 4x12, Single leg calf 3x15."},
-    {day:"Mié",name:"Carrera Z2 corta",type:"z2",dist:8,time:55,zone:"Z2",desc:"8km fácil. Si sientes fatiga, reduce a 6km."},
-    {day:"Jue",name:"Tempo run 20min",type:"tempo",dist:11,time:70,zone:"Z3-Z4",desc:"3km calentamiento + 20min a 5:30/km + 3km enfriamiento."},
+    {day:"Mié",name:"Carrera Z2 corta",type:"z2",dist:7,time:47,zone:"Z2",desc:"7km fácil. Si sientes fatiga, reduce a 5km."},
+    {day:"Jue",name:"Tempo run 15min",type:"tempo",dist:9,time:58,zone:"Z3-Z4",desc:"2km calentamiento + 15min a 5:50/km + 2km enfriamiento."},
     {day:"Vie",name:"Fuerza Full Body",type:"strength",dist:0,time:55,zone:"--",desc:"Plancha 4x50s, Goblet squat 3x12, Chin-ups 3x8, Farmer walk 3x30m."},
-    {day:"Sáb",name:"Long run 18km",type:"long",dist:18,time:120,zone:"Z2-Z3",desc:"18km. Gel a los 12km. Ritmo 6:40/km."},
+    {day:"Sáb",name:"Long run 13km",type:"long",dist:13,time:87,zone:"Z2-Z3",desc:"13km. Ritmo 6:40/km. Mantén conversación."},
     {day:"Dom",name:"Recuperación",type:"rest",dist:0,time:0,zone:"--",desc:"Descanso. Stretching opcional 20min."}
   ]},
-  {week:3,phase:"Volumen I",km:"45-50",days:[
-    {day:"Lun",name:"Carrera Z2",type:"z2",dist:10,time:68,zone:"Z2",desc:"10km zona 2 puro. FC 125-145."},
-    {day:"Mar",name:"Intervalos 4x1km",type:"interval",dist:10,time:65,zone:"Z4-Z5",desc:"2km cal + 4x1km a ritmo 5k con 2min recuperación + 2km enfriamiento."},
+  // SEMANA 3 — Volumen I (en curso — Lun/Mar ya hechos)
+  {week:3,phase:"Volumen I",km:"30-35",days:[
+    {day:"Lun",name:"Carrera Z2",type:"z2",dist:8,time:54,zone:"Z2",desc:"8km zona 2 puro. FC 125-145."},
+    {day:"Mar",name:"Intervalos 4x800m",type:"interval",dist:8,time:52,zone:"Z4-Z5",desc:"2km cal + 4x800m a ritmo 5:30/km con 90s recuperación + 2km enfriamiento."},
     {day:"Mié",name:"Fuerza + Movilidad",type:"strength",dist:0,time:60,zone:"--",desc:"Fuerza 40min + stretching runners 20min."},
-    {day:"Jue",name:"Carrera Z2 + Tempo",type:"tempo",dist:13,time:85,zone:"Z2-Z3",desc:"8km Z2 + 25min a ritmo 5:20/km."},
+    {day:"Jue",name:"Carrera Z2 + Tempo corto",type:"tempo",dist:10,time:67,zone:"Z2-Z3",desc:"6km Z2 + 15min a 6:00/km. Ritmo objetivo medio maratón."},
     {day:"Vie",name:"Fuerza Tren Inferior",type:"strength",dist:0,time:60,zone:"--",desc:"Búlgaras 4x10, RDL 4x10, Hip thrust 4x15, Glute bridge 3x45s."},
-    {day:"Sáb",name:"Long run 20km",type:"long",dist:20,time:134,zone:"Z2-Z3",desc:"¡Primer 20km! Ritmo 6:40/km. 2 geles."},
-    {day:"Dom",name:"Rodaje suave",type:"z2",dist:6,time:40,zone:"Z1-Z2",desc:"6km muy suaves."}
+    {day:"Sáb",name:"Long run 14km",type:"long",dist:14,time:95,zone:"Z2-Z3",desc:"14km. Últimos 2km a ritmo objetivo 6:15/km."},
+    {day:"Dom",name:"Rodaje suave",type:"z2",dist:5,time:34,zone:"Z1-Z2",desc:"5km muy suaves. Recuperación activa."}
   ]},
-  {week:4,phase:"Volumen II",km:"50-55",days:[
-    {day:"Lun",name:"Carrera Z2",type:"z2",dist:10,time:68,zone:"Z2",desc:"10km zona 2."},
+  // SEMANA 4 — Volumen II
+  {week:4,phase:"Volumen II",km:"32-37",days:[
+    {day:"Lun",name:"Carrera Z2",type:"z2",dist:8,time:54,zone:"Z2",desc:"8km zona 2."},
     {day:"Mar",name:"Fuerza Upper + Core",type:"strength",dist:0,time:55,zone:"--",desc:"Chin-ups 4x8, Press banca 3x10, Filas 3x10, Plancha 5x45s."},
-    {day:"Mié",name:"Intervalos 6x800m",type:"interval",dist:11,time:70,zone:"Z4-Z5",desc:"2km cal + 6x800m a ritmo 5k con 90s recuperación + 2km enfriamiento."},
-    {day:"Jue",name:"Maratón pace",type:"tempo",dist:14,time:90,zone:"Z3",desc:"4km fácil + 6km a 6:01/km + 4km fácil."},
+    {day:"Mié",name:"Intervalos 5x800m",type:"interval",dist:9,time:58,zone:"Z4-Z5",desc:"2km cal + 5x800m a ritmo 5:20/km con 90s recuperación + 2km enfriamiento."},
+    {day:"Jue",name:"Ritmo medio maratón",type:"tempo",dist:10,time:65,zone:"Z3",desc:"2km fácil + 6km a 6:15/km + 2km fácil. Practica tu ritmo objetivo."},
     {day:"Vie",name:"Fuerza Tren Inferior",type:"strength",dist:0,time:60,zone:"--",desc:"Sentadillas 4x8, RDL 4x10, Zancadas 3x10, Pantorrillas 4x15."},
-    {day:"Sáb",name:"Long run 22km",type:"long",dist:22,time:148,zone:"Z2-Z3",desc:"22km. Últimos 5km a ritmo maratón. 3 geles."},
-    {day:"Dom",name:"Recuperación activa",type:"rest",dist:5,time:35,zone:"Z1",desc:"5km muy suaves. Foam roller."}
+    {day:"Sáb",name:"Long run 15km",type:"long",dist:15,time:101,zone:"Z2-Z3",desc:"15km. Últimos 3km a ritmo objetivo 6:15/km."},
+    {day:"Dom",name:"Recuperación activa",type:"rest",dist:4,time:27,zone:"Z1",desc:"4km muy suaves. Foam roller."}
   ]},
-  {week:5,phase:"Específico I",km:"55-60",days:[
-    {day:"Lun",name:"Carrera Z2",type:"z2",dist:11,time:75,zone:"Z2",desc:"11km zona 2."},
+  // SEMANA 5 — Específico I
+  {week:5,phase:"Específico I",km:"35-40",days:[
+    {day:"Lun",name:"Carrera Z2",type:"z2",dist:8,time:54,zone:"Z2",desc:"8km zona 2."},
     {day:"Mar",name:"Fuerza completa",type:"strength",dist:0,time:65,zone:"--",desc:"Semana de carga. Sube pesos 5-10%."},
-    {day:"Mié",name:"Intervals 3x2km",type:"interval",dist:12,time:78,zone:"Z4",desc:"2km cal + 3x2km a 5:40/km con 3min recuperación + 2km enfriamiento."},
-    {day:"Jue",name:"Tempo run 35min",type:"tempo",dist:14,time:90,zone:"Z3-Z4",desc:"3km cal + 35min a 5:30/km + 3km enfriamiento."},
+    {day:"Mié",name:"Intervalos 4x1km",type:"interval",dist:10,time:65,zone:"Z4",desc:"2km cal + 4x1km a 5:45/km con 2min recuperación + 2km enfriamiento."},
+    {day:"Jue",name:"Tempo run 25min",type:"tempo",dist:11,time:72,zone:"Z3-Z4",desc:"2km cal + 25min a 5:55/km + 2km enfriamiento."},
     {day:"Vie",name:"Fuerza + Movilidad",type:"strength",dist:0,time:60,zone:"--",desc:"70% del peso. Movilidad cadera 20min."},
-    {day:"Sáb",name:"Long run 24km",type:"long",dist:24,time:162,zone:"Z2-Z3",desc:"24km. Últimos 8km a ritmo maratón. 3-4 geles."},
-    {day:"Dom",name:"Rodaje corto",type:"z2",dist:7,time:47,zone:"Z1-Z2",desc:"7km suaves."}
+    {day:"Sáb",name:"Long run 17km",type:"long",dist:17,time:115,zone:"Z2-Z3",desc:"17km. Últimos 4km a ritmo objetivo 6:15/km. 1 gel."},
+    {day:"Dom",name:"Rodaje corto",type:"z2",dist:5,time:34,zone:"Z1-Z2",desc:"5km suaves."}
   ]},
-  {week:6,phase:"Específico II",km:"60-65",days:[
-    {day:"Lun",name:"Carrera Z2 larga",type:"z2",dist:13,time:88,zone:"Z2",desc:"13km zona 2."},
+  // SEMANA 6 — Específico II (Peak para 21k)
+  {week:6,phase:"Específico II",km:"37-42",days:[
+    {day:"Lun",name:"Carrera Z2",type:"z2",dist:9,time:61,zone:"Z2",desc:"9km zona 2."},
     {day:"Mar",name:"Fuerza tren inferior",type:"strength",dist:0,time:65,zone:"--",desc:"Búlgaras 5x8, RDL 4x10, Hip thrust 4x15."},
-    {day:"Mié",name:"Intervalos 5x1mile",type:"interval",dist:13,time:82,zone:"Z4-Z5",desc:"2km cal + 5x1.6km a ritmo 5k con 2min + 2km enfriamiento."},
-    {day:"Jue",name:"Maratón pace largo",type:"tempo",dist:16,time:100,zone:"Z3",desc:"3km fácil + 10km a 6:01/km + 3km fácil."},
-    {day:"Vie",name:"Fuerza Upper + Core",type:"strength",dist:0,time:55,zone:"--",desc:"Upper body + core. Sin piernas."},
-    {day:"Sáb",name:"Long run 26km",type:"long",dist:26,time:175,zone:"Z2-Z3",desc:"¡26km! Últimos 10km a ritmo maratón. 4 geles."},
-    {day:"Dom",name:"Recuperación",type:"rest",dist:0,time:0,zone:"--",desc:"Descanso total."}
+    {day:"Mié",name:"Intervalos 6x800m",type:"interval",dist:11,time:70,zone:"Z4-Z5",desc:"2km cal + 6x800m a ritmo 5:15/km con 90s recuperación + 2km enfriamiento."},
+    {day:"Jue",name:"Ritmo objetivo largo",type:"tempo",dist:12,time:78,zone:"Z3",desc:"2km fácil + 8km a 6:15/km + 2km fácil. Tu simulacro de carrera."},
+    {day:"Vie",name:"Fuerza Upper + Core",type:"strength",dist:0,time:55,zone:"--",desc:"Upper body + core. Sin piernas pesadas."},
+    {day:"Sáb",name:"Long run 19km 🎯",type:"long",dist:19,time:128,zone:"Z2-Z3",desc:"¡19km! Tu tirada más larga. Últimos 5km a ritmo objetivo. 1-2 geles. Practica nutrición de carrera."},
+    {day:"Dom",name:"Recuperación",type:"rest",dist:0,time:0,zone:"--",desc:"Descanso total. Muy importante."}
   ]},
-  {week:7,phase:"Peak Week",km:"65-70",days:[
-    {day:"Lun",name:"Carrera Z2",type:"z2",dist:12,time:80,zone:"Z2",desc:"12km zona 2. Semana máxima de carga."},
-    {day:"Mar",name:"Fuerza Peak",type:"strength",dist:0,time:70,zone:"--",desc:"Última semana heavy. Búlgaras, RDL, Upper."},
-    {day:"Mié",name:"Intervalos 8x600m",type:"interval",dist:12,time:75,zone:"Z5",desc:"2km cal + 8x600m muy rápido con 90s recuperación + 2km enfriamiento."},
-    {day:"Jue",name:"Tempo run 40min",type:"tempo",dist:16,time:100,zone:"Z3-Z4",desc:"3km + 40min a 5:25/km + 3km."},
-    {day:"Vie",name:"Fuerza ligera",type:"strength",dist:0,time:45,zone:"--",desc:"60% del peso. Solo mantener patrón motor."},
-    {day:"Sáb",name:"Long run 28km",type:"long",dist:28,time:188,zone:"Z2-Z3",desc:"28km. Últimos 12km a ritmo maratón. Tu prueba final."},
-    {day:"Dom",name:"Rodaje recuperación",type:"z2",dist:8,time:55,zone:"Z1-Z2",desc:"8km muy suaves."}
+  // SEMANA 7 — Taper I
+  {week:7,phase:"Taper I 📉",km:"22-27",days:[
+    {day:"Lun",name:"Carrera Z2 corta",type:"z2",dist:7,time:47,zone:"Z2",desc:"7km zona 2. Empieza el taper — baja el volumen, mantén intensidad."},
+    {day:"Mar",name:"Fuerza ligera",type:"strength",dist:0,time:45,zone:"--",desc:"60% del peso. Solo mantenimiento motor."},
+    {day:"Mié",name:"Intervalos cortos",type:"interval",dist:7,time:45,zone:"Z4",desc:"1km cal + 4x600m a ritmo 5:30/km con 90s recuperación + 1km enfriamiento."},
+    {day:"Jue",name:"Ritmo objetivo corto",type:"tempo",dist:8,time:52,zone:"Z3",desc:"2km + 4km a 6:15/km + 2km. Sentir el ritmo sin fatiga."},
+    {day:"Vie",name:"Trote suave",type:"z2",dist:5,time:34,zone:"Z1",desc:"5km muy suaves. Piernas frescas para el fin de semana."},
+    {day:"Sáb",name:"Rodaje activación",type:"z2",dist:8,time:54,zone:"Z1-Z2",desc:"8km suaves con 4 strides de 100m al final. Sin esfuerzo."},
+    {day:"Dom",name:"Descanso",type:"rest",dist:0,time:0,zone:"--",desc:"Descanso. Prepara la ropa, los geles, la logística de carrera."}
   ]},
-  {week:8,phase:"Taper 🎯",km:"30-35",days:[
-    {day:"Lun",name:"Carrera Z2 corta",type:"z2",dist:8,time:55,zone:"Z2",desc:"8km. Empieza el taper."},
-    {day:"Mar",name:"Fuerza muy ligera",type:"strength",dist:0,time:40,zone:"--",desc:"50% del peso. Solo mantenimiento."},
-    {day:"Mié",name:"Intervalos cortos",type:"interval",dist:8,time:50,zone:"Z4",desc:"1km cal + 4x400m a ritmo 5k + 1km enfriamiento."},
-    {day:"Jue",name:"Maratón pace corto",type:"tempo",dist:10,time:65,zone:"Z3",desc:"2km + 5km a 6:01/km + 2km."},
-    {day:"Vie",name:"Trote suave",type:"z2",dist:5,time:35,zone:"Z1",desc:"5km muy suaves."},
-    {day:"Sáb",name:"Activación pre-carrera",type:"z2",dist:3,time:20,zone:"Z1",desc:"3km suaves + 4 strides. Duerme BIEN esta noche."},
-    {day:"Dom",name:"🏆 MARATÓN SANTIAGO",type:"marathon",dist:42,time:125,zone:"Z3",desc:"El día llegó. Meta: 2:00-2:15hrs. Ritmo: 6:01/km. Sale conservador los primeros 10km. ¡Tú puedes Martín!"}
+  // SEMANA 8 — Taper Final + Carrera
+  {week:8,phase:"Taper Final 🎯",km:"10-15",days:[
+    {day:"Lun",name:"Trote suave",type:"z2",dist:5,time:34,zone:"Z1",desc:"5km muy suaves. Última semana de preparación."},
+    {day:"Mar",name:"Fuerza muy ligera",type:"strength",dist:0,time:30,zone:"--",desc:"Solo peso corporal. 10min. Mantener sensaciones."},
+    {day:"Mié",name:"Activación con strides",type:"z2",dist:4,time:27,zone:"Z1",desc:"3km suaves + 4 strides de 80m. Última vez antes de la carrera."},
+    {day:"Jue",name:"Trote 20min",type:"z2",dist:3,time:20,zone:"Z1",desc:"20min muy suaves. Nada más. Guarda energía."},
+    {day:"Vie",name:"Descanso total",type:"rest",dist:0,time:0,zone:"--",desc:"Descansa. Come bien, hidratate. Duerme temprano."},
+    {day:"Sáb",name:"Activación pre-carrera",type:"z2",dist:2,time:15,zone:"Z1",desc:"2km suaves + 3 strides. Prepara todo la noche anterior. ¡Duerme bien!"},
+    {day:"Dom",name:"🏆 MEDIO MARATÓN SANTIAGO",type:"marathon",dist:21,time:135,zone:"Z3",desc:"¡El día llegó! Meta: Sub 2:15 (6:24/km). Sal conservador los primeros 5km a 6:30/km. Gel en km 8 y km 14. ¡Tú puedes Martín!"}
   ]}
 ];
 
@@ -520,43 +457,35 @@ function getCurrentWeekDay(){
   return{week:Math.min(Math.floor(diff/7)+1,8),dayIdx:diff%7};
 }
 
-// LOAD/SAVE
 async function loadState(){
-// Cargar backup local primero
   const lc=localStorage.getItem('maraton_completed');
   if(lc)state.completed=JSON.parse(lc);
-  // Luego sincronizar con backend (tiene prioridad)
   try{
     const r=await fetch('/api/workout/all');
     const data=await r.json();
     for(const[id,v]of Object.entries(data))if(v.completed)state.completed[id]=true;
-    // Actualizar localStorage con datos del backend
     localStorage.setItem('maraton_completed',JSON.stringify(state.completed));
   }catch(e){}
   const m=localStorage.getItem('maraton_metrics');
   if(m)state.metrics=JSON.parse(m);
-  // Restore chat history
   const ch=localStorage.getItem('maraton_chat');
   if(ch){
     state.chatHistory=JSON.parse(ch);
-    // Render saved messages
     const msgs=document.getElementById('chat-messages');
     msgs.innerHTML='';
-    // Add welcome message first
-    addMsgDOM('ai','¡Hola Martín! Soy tu coach para el Maratón de Santiago 2026. ¿En qué te ayudo hoy?');
+    addMsgDOM('ai','¡Hola Martín! Soy tu coach para el Medio Maratón de Santiago 2026. ¿En qué te ayudo hoy?');
     state.chatHistory.forEach(m=>{
       if(m.role==='user')addMsgDOM('user',m.content);
       else addMsgDOM('ai',m.content);
     });
   } else {
-    addMsgDOM('ai','¡Hola Martín! Soy tu coach para el Maratón de Santiago 2026. Estoy aquí para ayudarte con tu plan, ajustar ejercicios, responder dudas sobre el entrenamiento de Attia y analizar tus datos de Garmin. ¿En qué te ayudo hoy?');
+    addMsgDOM('ai','¡Hola Martín! Soy tu coach para el Medio Maratón de Santiago 2026. Plan ajustado para 21k — meta Sub 2:15. Estoy aquí para ayudarte con el plan, analizar tus datos Garmin y responder dudas. ¿En qué te ayudo hoy?');
   }
   renderAll();
 }
 
 async function saveWorkout(id,week,dayIdx,completed){
   state.completed[id]=completed;
-  // Guardar en localStorage como backup
   localStorage.setItem('maraton_completed',JSON.stringify(state.completed));
   try{
     await fetch('/api/workout/update',{
@@ -572,7 +501,6 @@ function saveMetric(key,val){
   localStorage.setItem('maraton_metrics',JSON.stringify(state.metrics));
 }
 
-// RENDER
 function renderAll(){
   renderCountdown();renderToday();renderWeekGrid();renderProgress();renderPlan();renderExercises();renderMetricInputs();
 }
@@ -595,7 +523,7 @@ function renderToday(){
   const tags=document.getElementById('today-tags');
   tags.innerHTML='';
   const tmap={z2:'tag-z2',tempo:'tag-tempo',long:'tag-long',strength:'tag-strength',rest:'tag-rest',interval:'tag-interval',marathon:'tag-long'};
-  const lmap={z2:'Zona 2',tempo:'Tempo',long:'Long Run',strength:'Fuerza',rest:'Descanso',interval:'Intervalos',marathon:'🏆 MARATÓN'};
+  const lmap={z2:'Zona 2',tempo:'Tempo',long:'Long Run',strength:'Fuerza',rest:'Descanso',interval:'Intervalos',marathon:'🏆 MEDIO MARATÓN'};
   const sp=document.createElement('span');
   sp.className=`tag ${tmap[t.type]||'tag-rest'}`;
   sp.textContent=lmap[t.type]||t.type;
@@ -720,7 +648,6 @@ function renderMetricInputs(){
   });
 }
 
-// ACTIONS
 function showTab(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -798,7 +725,6 @@ async function logExercise(){
   }catch(e){}
 }
 
-// CHAT
 function addMsgDOM(role,text){
   const msgs=document.getElementById('chat-messages');
   const div=document.createElement('div');
@@ -853,33 +779,22 @@ function quickMsg(text){
 
 function sendGarminToCoach(){
   const m=state.metrics;
-  const msg=`Datos Garmin Forerunner 955 — post entrenamiento:
-
-RECUPERACIÓN:
-- HRV: ${m.hrv||'N/A'} ms
-- Body Battery: ${m.bb||'N/A'}/100
-- VO2max: ${m.vo2||'N/A'} ml/kg/min
-- Sueño: ${m.sleep||'N/A'} hrs
-
-CARRERA:
-- Distancia: ${m.dist||'N/A'} km · Ritmo: ${m.pace||'N/A'} min/km
-- FC media: ${m.avghr||'N/A'} ppm · FC máx: ${m.maxhr||'N/A'} ppm
-- Cadencia: ${m.cadence||'N/A'} spm · Potencia: ${m.power||'N/A'} W
-- Oscilación vertical: ${m.vo||'N/A'} cm · Ratio vertical: ${m.vr||'N/A'}%
-- Stamina final: ${m.stamina||'N/A'}% · Condición rendimiento: ${m.perfcond||'N/A'}
-
-TRAINING EFFECT:
-- Aeróbico: ${m.te_aer||'N/A'}/5 · Anaeróbico: ${m.te_ana||'N/A'}/5
-- Carga de ejercicio: ${m.load||'N/A'}
-
-ZONAS FC (min):
-- Z1: ${m.z1||'0'} · Z2: ${m.z2time||'0'} · Z3: ${m.z3||'0'} · Z4: ${m.z4||'0'} · Z5: ${m.z5||'0'}
-
-Analiza estos datos en el contexto de mi plan de maratón (semana actual y entrenamiento de hoy). ¿Cómo me recuperé? ¿Debo ajustar algo para el próximo entrenamiento?`;
+  const msg=`Datos Garmin Forerunner 955 — post entrenamiento:\n\nRECUPERACIÓN:\n- HRV: ${m.hrv||'N/A'} ms\n- Body Battery: ${m.bb||'N/A'}/100\n- VO2max: ${m.vo2||'N/A'} ml/kg/min\n- Sueño: ${m.sleep||'N/A'} hrs\n\nCARRERA:\n- Distancia: ${m.dist||'N/A'} km · Ritmo: ${m.pace||'N/A'} min/km\n- FC media: ${m.avghr||'N/A'} ppm · FC máx: ${m.maxhr||'N/A'} ppm\n- Cadencia: ${m.cadence||'N/A'} spm · Potencia: ${m.power||'N/A'} W\n- Oscilación vertical: ${m.vo||'N/A'} cm · Ratio vertical: ${m.vr||'N/A'}%\n- Stamina final: ${m.stamina||'N/A'}% · Condición rendimiento: ${m.perfcond||'N/A'}\n\nTRAINING EFFECT:\n- Aeróbico: ${m.te_aer||'N/A'}/5 · Anaeróbico: ${m.te_ana||'N/A'}/5\n- Carga de ejercicio: ${m.load||'N/A'}\n\nZONAS FC (min):\n- Z1: ${m.z1||'0'} · Z2: ${m.z2time||'0'} · Z3: ${m.z3||'0'} · Z4: ${m.z4||'0'} · Z5: ${m.z5||'0'}\n\nAnaliza estos datos en el contexto de mi plan de medio maratón (semana actual). ¿Cómo me recuperé? ¿Debo ajustar algo para el próximo entrenamiento?`;
   document.getElementById('chat-input').value=msg;
   sendChat();
   showTab('chat',document.querySelectorAll('.tab-btn')[2]);
 }
+
+function clearWorkoutMetrics(){
+  const workoutKeys=['dist','pace','avghr','maxhr','cadence','power','vo','vr','stamina','perfcond','te_aer','te_ana','load','z1','z2time','z3','z4','z5'];
+  workoutKeys.forEach(k=>delete state.metrics[k]);
+  localStorage.setItem('maraton_metrics',JSON.stringify(state.metrics));
+  ['dist','pace','hr','maxhr','cadence','power','vo','vr','stamina','perfcond','te-aer','te-ana','load','z1','z2','z3','z4','z5'].forEach(id=>{
+    const el=document.getElementById('inp-'+id);
+    if(el)el.value='';
+  });
+}
+
 async function sendStrengthToCoach(){
   try{
     const r=await fetch('/api/strength/history');
@@ -901,7 +816,7 @@ async function sendStrengthToCoach(){
       const r=recent[ex];
       return`- ${exNames[ex]||ex}: PR ${w>0?w+'kg':'peso corporal'} · Último: ${r.sets}x${r.reps} (${r.date})`;
     }).join('\n');
-    const msg=`Resumen de fuerza — Semana ${week} del plan:\n${lines}\n\n¿Estoy progresando bien en fuerza para esta etapa del plan de maratón? ¿Debo subir pesos, mantener o reducir dada la carga de running actual?`;
+    const msg=`Resumen de fuerza — Semana ${week} del plan de medio maratón:\n${lines}\n\n¿Estoy progresando bien en fuerza? ¿Debo subir pesos, mantener o reducir dada la carga de running actual hacia el 21k?`;
     document.getElementById('chat-input').value=msg;
     sendChat();
     showTab('chat',document.querySelectorAll('.tab-btn')[2]);
@@ -910,17 +825,7 @@ async function sendStrengthToCoach(){
     showTab('chat',document.querySelectorAll('.tab-btn')[2]);
   }
 }
-function clearWorkoutMetrics(){
-  const workoutKeys=['dist','pace','avghr','maxhr','cadence','power','vo','vr','stamina','perfcond','te_aer','te_ana','load','z1','z2time','z3','z4','z5'];
-  workoutKeys.forEach(k=>delete state.metrics[k]);
-  localStorage.setItem('maraton_metrics',JSON.stringify(state.metrics));
-  renderMetricInputs();
-  // Limpiar visualmente los inputs
-  ['dist','pace','hr','maxhr','cadence','power','vo','vr','stamina','perfcond','te-aer','te-ana','load','z1','z2','z3','z4','z5'].forEach(id=>{
-    const el=document.getElementById('inp-'+id);
-    if(el)el.value='';
-  });
-}
+
 function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px'}
 function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
